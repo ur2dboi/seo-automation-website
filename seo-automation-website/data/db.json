@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "u_demo",
+      "name": "Demo User",
+      "email": "demo@example.com",
+      "password": "demo123"
+    }
+  ],
+  "projects": [
+    {
+      "id": "prj_56f9cca07e43",
+      "name": "Example Brand",
+      "url": "https://example.com",
+      "niche": "SEO automation services",
+      "createdAt": "2026-06-11T18:53:29.451Z",
+      "keywords": [
+        {
+          "cluster": "Technical SEO automation",
+          "intent": "Commercial",
+          "primary": "technical seo automation",
+          "url": "/services/technical-seo-automation/"
+        },
+        {
+          "cluster": "SEO audit software",
+          "intent": "Commercial",
+          "primary": "seo audit software",
+          "url": "/seo-audit-software/"
+        },
+        {
+          "cluster": "Generative AI SEO",
+          "intent": "Informational",
+          "primary": "generative ai search optimization",
+          "url": "/blog/generative-ai-search-optimization/"
+        }
+      ]
+    }
+  ],
+  "audits": [],
+  "schedules": [],
+  "integrations": {
+    "gsc": {},
+    "ga4": {},
+    "bing": {},
+    "pagespeed": {},
+    "semrush": {},
+    "ahrefs": {},
+    "gbp": {}
+  }
+}

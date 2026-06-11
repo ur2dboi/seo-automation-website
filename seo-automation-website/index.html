@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEO Automation Command Center</title>
+  <meta name="description" content="A modern SEO automation command center for foundational setup, keyword research, on-page optimization, technical health, authority building, and GEO readiness." />
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg-soft: #101b2e;
+      --card: rgba(255,255,255,.075);
+      --card-2: rgba(255,255,255,.11);
+      --text: #ecf4ff;
+      --muted: #a9b8d4;
+      --line: rgba(255,255,255,.14);
+      --primary: #62e6b8;
+      --primary-2: #65a7ff;
+      --warning: #ffd166;
+      --danger: #ff6b8a;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(101,167,255,.30), transparent 33rem),
+        radial-gradient(circle at 80% 20%, rgba(98,230,184,.18), transparent 28rem),
+        linear-gradient(135deg, #060b14 0%, #08111f 45%, #11192b 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(8,17,31,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: -.03em; }
+    .logo {
+      width: 38px; height: 38px; border-radius: 13px;
+      background: conic-gradient(from 180deg, var(--primary), var(--primary-2), #b884ff, var(--primary));
+      box-shadow: 0 0 26px rgba(98,230,184,.25);
+      position: relative;
+    }
+    .logo:after { content: ""; position: absolute; inset: 10px; background: #08111f; border-radius: 8px; }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    nav a { color: var(--muted); font-size: 13px; padding: 9px 11px; border-radius: 999px; }
+    nav a:hover { color: var(--text); background: rgba(255,255,255,.08); }
+    .hero { padding: 86px 0 48px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 34px; align-items: center; }
+    .eyebrow { color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: .14em; font-size: 12px; }
+    h1 { font-size: clamp(44px, 7vw, 82px); line-height: .94; letter-spacing: -.07em; margin: 14px 0 20px; }
+    .lead { color: var(--muted); font-size: 19px; line-height: 1.65; max-width: 720px; }
+    .cta { display: flex; gap: 13px; flex-wrap: wrap; margin-top: 28px; }
+    .btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+      display: inline-flex; align-items: center; gap: 9px;
+    }
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.12); }
+    .btn.primary { background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: #06111e; border: 0; }
+    .terminal {
+      background: rgba(5,10,18,.74);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .terminal-top { display: flex; gap: 7px; padding: 15px; border-bottom: 1px solid var(--line); }
+    .dot { width: 11px; height: 11px; border-radius: 999px; background: #ff5f56; }
+    .dot:nth-child(2){ background: #ffbd2e; } .dot:nth-child(3){ background: #27c93f; }
+    .terminal-body { padding: 22px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.75; color: #cfe0ff; }
+    .cmd { color: var(--primary); } .ok { color: #8bffce; } .warn { color: var(--warning); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+    .stat { padding: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+    .stat b { display: block; font-size: 28px; letter-spacing: -.04em; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    section { padding: 42px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin-bottom: 20px; }
+    h2 { font-size: clamp(30px, 4vw, 48px); letter-spacing: -.055em; margin: 0; }
+    .section-head p { color: var(--muted); max-width: 560px; line-height: 1.55; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.055));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 21px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.16);
+    }
+    .card h3 { margin: 0 0 10px; font-size: 19px; letter-spacing: -.025em; }
+    .card p, .card li { color: var(--muted); line-height: 1.55; font-size: 14px; }
+    .icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: rgba(98,230,184,.13); border: 1px solid rgba(98,230,184,.22); margin-bottom: 16px; }
+    .checklist { display: grid; grid-template-columns: .8fr 1.2fr; gap: 18px; align-items: start; }
+    .progress-card { position: sticky; top: 88px; }
+    .progress-ring { width: 180px; height: 180px; margin: 10px auto 18px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--primary) var(--progress, 0%), rgba(255,255,255,.11) 0); }
+    .progress-ring div { width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; background: #0d1728; font-size: 34px; font-weight: 900; }
+    .task-group { margin-bottom: 14px; }
+    .task-title { display: flex; align-items:center; justify-content: space-between; padding: 15px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; cursor: pointer; }
+    .task-title strong { letter-spacing: -.02em; }
+    .task-items { display: grid; gap: 8px; padding: 10px 0 0; }
+    label.task { display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,.055); border: 1px solid var(--line); border-radius: 15px; padding: 13px; cursor: pointer; }
+    label.task input { margin-top: 4px; accent-color: var(--primary); }
+    label.task span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+    label.task b { color: var(--text); display: block; margin-bottom: 3px; }
+    .automation { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+    .form { display: grid; gap: 12px; }
+    input, textarea, select {
+      width: 100%;
+      color: var(--text);
+      background: rgba(255,255,255,.075);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px 14px;
+      outline: none;
+      font: inherit;
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    input:focus, textarea:focus { border-color: rgba(98,230,184,.6); box-shadow: 0 0 0 4px rgba(98,230,184,.08); }
+    .output { min-height: 320px; white-space: pre-wrap; word-break: break-word; background: rgba(1,5,10,.5); border: 1px solid var(--line); border-radius: 16px; padding: 16px; color: #dce8ff; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.6; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tab { padding: 9px 11px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--muted); cursor: pointer; }
+    .tab.active { color: #06111e; background: var(--primary); border-color: transparent; font-weight: 800; }
+    .pill { display: inline-flex; align-items:center; gap: 8px; padding: 8px 11px; border-radius: 999px; background: rgba(101,167,255,.13); color: #cfe0ff; border: 1px solid rgba(101,167,255,.23); font-size: 13px; }
+    .timeline { display: grid; gap: 12px; counter-reset: step; }
+    .step { display:grid; grid-template-columns: 44px 1fr; gap: 14px; align-items:start; }
+    .step:before { counter-increment: step; content: counter(step); width: 42px; height: 42px; border-radius: 14px; display:grid; place-items:center; background: linear-gradient(135deg, var(--primary), var(--primary-2)); color:#07111d; font-weight: 900; }
+    footer { padding: 46px 0; border-top: 1px solid var(--line); color: var(--muted); }
+    .toast { position: fixed; right: 18px; bottom: 18px; background: #102033; border: 1px solid var(--line); color: var(--text); padding: 13px 16px; border-radius: 14px; box-shadow: var(--shadow); opacity: 0; transform: translateY(12px); transition: .25s; z-index: 99; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @media (max-width: 920px) {
+      .hero-grid, .checklist, .automation { grid-template-columns: 1fr; }
+      .grid, .stats { grid-template-columns: repeat(2, 1fr); }
+      .progress-card { position: static; }
+    }
+    @media (max-width: 620px) {
+      .grid, .stats { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .hero { padding-top: 56px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SEO Automation Command Center",
+    "applicationCategory": "BusinessApplication",
+    "description": "Interactive SEO checklist and asset generator for sitemaps, robots.txt, metadata, schema, and implementation roadmaps.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top"><span class="logo"></span><span>SEO Automation OS</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="#modules">Modules</a>
+        <a href="#checklist">Checklist</a>
+        <a href="#generator">Automation</a>
+        <a href="#roadmap">Roadmap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Technical SEO + GEO workflow</div>
+          <h1>Launch an automated SEO operating system.</h1>
+          <p class="lead">Turn foundational setup, keyword research, on-page optimization, technical health, authority acquisition, and generative AI search optimization into a repeatable execution dashboard.</p>
+          <div class="cta">
+            <a class="btn primary" href="#generator">Generate SEO Assets</a>
+            <a class="btn" href="#checklist">Open Checklist</a>
+          </div>
+          <div class="stats" aria-label="SEO workflow statistics">
+            <div class="stat"><b>6</b><span>SEO workstreams</span></div>
+            <div class="stat"><b>25+</b><span>Actionable tasks</span></div>
+            <div class="stat"><b>4</b><span>Asset generators</span></div>
+            <div class="stat"><b>GEO</b><span>AI search ready</span></div>
+          </div>
+        </div>
+        <div class="terminal" aria-label="Automation preview">
+          <div class="terminal-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">
+            <div><span class="cmd">seo-os init</span> --property=https://example.com</div>
+            <div class="ok">✓ Generated sitemap.xml</div>
+            <div class="ok">✓ Drafted robots.txt crawl directives</div>
+            <div class="ok">✓ Created title/meta/schema templates</div>
+            <div class="warn">! GA4/GSC require account authorization</div>
+            <br />
+            <div><span class="cmd">next:</span> submit sitemap in GSC + Bing Webmaster Tools</div>
+            <div><span class="cmd">next:</span> validate Core Web Vitals and mobile rendering</div>
+            <div><span class="cmd">next:</span> map keyword clusters to unique URLs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modules">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>SEO modules</h2>
+          <p>Each module is structured around tasks you can track, assets you can generate, and checks your team can operationalize.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="icon">⚙️</div><h3>Foundational setup</h3><p>Google Search Console, GA4, XML sitemaps, Bing submission, and strategic robots.txt directives.</p></article>
+          <article class="card"><div class="icon">🔎</div><h3>Keyword & intent research</h3><p>Competitor URL analysis, SERP intent classification, and semantic keyword-to-URL clustering.</p></article>
+          <article class="card"><div class="icon">🧭</div><h3>On-page optimization</h3><p>Title tags, meta descriptions, heading hierarchy, natural keyword integration, and internal links.</p></article>
+          <article class="card"><div class="icon">🚀</div><h3>Technical architecture</h3><p>HTTPS, Core Web Vitals, mobile-first rendering, schema markup, and canonicalization.</p></article>
+          <article class="card"><div class="icon">🔗</div><h3>Authority acquisition</h3><p>Backlink audits, unlinked brand mention reclamation, local Google Business Profile optimization.</p></article>
+          <article class="card"><div class="icon">🤖</div><h3>GEO readiness</h3><p>LLM-friendly factual answers, entity clarity, structured citations, and consistent brand profiles.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="checklist">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Interactive checklist</h2>
+          <p>Track progress locally in your browser. Use this as a repeatable launch checklist for every website or campaign.</p>
+        </div>
+        <div class="checklist">
+          <aside class="card progress-card">
+            <span class="pill">Progress saved locally</span>
+            <div class="progress-ring" id="ring"><div id="progressText">0%</div></div>
+            <p id="progressDetail">0 of 0 tasks completed.</p>
+            <button class="btn primary" onclick="copyPlan()">Copy Action Plan</button>
+            <button class="btn" onclick="resetTasks()">Reset</button>
+          </aside>
+          <div id="taskList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="generator">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Automation generators</h2>
+          <p>Generate production-ready SEO implementation snippets. Full GA4/GSC automation requires account access and API authorization.</p>
+        </div>
+        <div class="automation">
+          <div class="card">
+            <div class="form">
+              <label>Website URL<input id="siteUrl" value="https://example.com" placeholder="https://yourdomain.com"></label>
+              <label>Brand / Organization<input id="brand" value="Example Brand" placeholder="Your brand name"></label>
+              <label>Main pages, one path per line<textarea id="pages">/
+/services/
+/blog/
+/contact/</textarea></label>
+              <label>Primary keyword<input id="keyword" value="SEO automation services" placeholder="Target keyword"></label>
+              <label>Meta description<textarea id="metaDesc">Automate technical SEO setup, keyword mapping, on-page optimization, and GEO readiness with a repeatable SEO operating system.</textarea></label>
+              <button class="btn primary" onclick="generateAsset()">Generate Selected Asset</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="tabs">
+              <button class="tab active" data-type="sitemap">Sitemap</button>
+              <button class="tab" data-type="robots">Robots</button>
+              <button class="tab" data-type="meta">Meta</button>
+              <button class="tab" data-type="schema">Schema</button>
+            </div>
+            <pre class="output" id="output"></pre>
+            <button class="btn" onclick="copyOutput()">Copy Output</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Automation roadmap</h2>
+          <p>Use this phased plan to convert the prototype into a live integrated SEO automation platform.</p>
+        </div>
+        <div class="grid">
+          <div class="card timeline" style="grid-column: span 2;">
+            <div class="step"><div><h3>Connect verified data sources</h3><p>Authenticate Google Search Console, GA4, Bing Webmaster Tools, Ahrefs/Semrush, and PageSpeed Insights through secure OAuth/API keys.</p></div></div>
+            <div class="step"><div><h3>Schedule recurring crawls</h3><p>Run weekly sitemap, robots, indexation, canonical, metadata, heading, broken-link, and schema checks.</p></div></div>
+            <div class="step"><div><h3>Generate prioritized tickets</h3><p>Convert detected issues into impact-scored action items for developers, content teams, and outreach specialists.</p></div></div>
+            <div class="step"><div><h3>Measure organic outcomes</h3><p>Report impressions, clicks, CTR, rankings, conversions, Core Web Vitals, and completed optimization tasks.</p></div></div>
+          </div>
+          <div class="card">
+            <h3>What can be automated now?</h3>
+            <ul>
+              <li>Sitemap and robots.txt generation</li>
+              <li>Meta title/description templates</li>
+              <li>JSON-LD schema generation</li>
+              <li>Checklist progress tracking</li>
+              <li>Implementation plan export</li>
+            </ul>
+            <h3>What needs credentials?</h3>
+            <ul>
+              <li>GSC property verification and submission</li>
+              <li>GA4 property creation and event tracking</li>
+              <li>Ahrefs/Semrush competitor data</li>
+              <li>Google Business Profile updates</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> SEO Automation OS. Built as a self-contained website prototype.</div>
+  </footer>
+  <div class="toast" id="toast">Copied.</div>
+
+  <script>
+    const groups = [
+      { title: '1. Foundational Setup & Basics', tasks: [
+        ['Set up Google Search Console', 'Connect your property to track indexation, keyword queries, and crawl issues.'],
+        ['Configure Google Analytics 4', 'Track engagement metrics, organic traffic behavior, landing pages, and conversion paths.'],
+        ['Generate and submit XML sitemap', 'Submit your sitemap via GSC and Bing Webmaster Tools.'],
+        ['Establish strategic robots.txt', 'Guide crawler access and block private, duplicate, or administrative paths.']
+      ]},
+      { title: '2. Keyword & Intent Research', tasks: [
+        ['Analyze competitor organic traffic', 'Use Ahrefs/Semrush-style reports to find semantic and keyword gaps.'],
+        ['Determine search intent', 'Classify queries as informational, navigational, commercial, or transactional.'],
+        ['Map keyword clusters', 'Assign primary and long-tail clusters to unique URLs to avoid cannibalization.']
+      ]},
+      { title: '3. On-Page & Semantic Optimization', tasks: [
+        ['Optimize title tags and meta descriptions', 'Front-load keywords and write CTR-oriented descriptions.'],
+        ['Enforce clean heading hierarchy', 'Use exactly one H1 and structured H2/H3/H4 sections.'],
+        ['Integrate keywords naturally', 'Use target phrases in early copy, slugs, and image alt text without stuffing.'],
+        ['Build contextual internal links', 'Pass topical authority with descriptive anchors across site silos.']
+      ]},
+      { title: '4. Technical Architecture & Health', tasks: [
+        ['Enforce HTTPS and SSL', 'Verify encryption and browser safety.'],
+        ['Optimize Core Web Vitals', 'Improve LCP, INP, and CLS through compression, caching, and code optimization.'],
+        ['Guarantee mobile responsive display', 'Audit mobile rendering for Google mobile-first indexing.'],
+        ['Deploy schema markup', 'Embed JSON-LD for Article, FAQ, Product, LocalBusiness, or Organization entities.'],
+        ['Mitigate duplicate content', 'Use self-referential or master canonical tags.']
+      ]},
+      { title: '5. Authority & Off-Page Acquisition', tasks: [
+        ['Execute competitor backlink auditing', 'Reverse-engineer referring domains and outreach opportunities.'],
+        ['Reclaim unlinked brand mentions', 'Find brand mentions and request contextual links.'],
+        ['Optimize Google Business Profile', 'Keep local NAP data accurate and consistent.']
+      ]},
+      { title: '6. Generative AI Search Optimization', tasks: [
+        ['Optimize for LLM summarization', 'Place direct, concise, factual answers at the top of key sections.'],
+        ['Build entity authority', 'Use consistent structured descriptions, citations, and digital PR profiles.']
+      ]}
+    ];
+
+    let selectedType = 'sitemap';
+    const key = 'seo-os-task-state-v1';
+    const saved = JSON.parse(localStorage.getItem(key) || '{}');
+
+    function renderTasks() {
+      const root = document.getElementById('taskList');
+      root.innerHTML = groups.map((group, gi) => `
+        <div class="task-group">
+          <div class="task-title"><strong>${group.title}</strong><span>${group.tasks.length} tasks</span></div>
+          <div class="task-items">
+            ${group.tasks.map((task, ti) => {
+              const id = `g${gi}t${ti}`;
+              return `<label class="task"><input type="checkbox" id="${id}" ${saved[id] ? 'checked' : ''} onchange="saveTask('${id}', this.checked)"><span><b>${task[0]}</b>${task[1]}</span></label>`;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+      updateProgress();
+    }
+
+    function saveTask(id, value) {
+      saved[id] = value;
+      localStorage.setItem(key, JSON.stringify(saved));
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const boxes = [...document.querySelectorAll('.task input[type="checkbox"]')];
+      const done = boxes.filter(b => b.checked).length;
+      const total = boxes.length;
+      const pct = total ? Math.round(done / total * 100) : 0;
+      document.getElementById('ring').style.setProperty('--progress', pct + '%');
+      document.getElementById('progressText').textContent = pct + '%';
+      document.getElementById('progressDetail').textContent = `${done} of ${total} tasks completed.`;
+    }
+
+    function resetTasks() {
+      Object.keys(saved).forEach(k => delete saved[k]);
+      localStorage.removeItem(key);
+      document.querySelectorAll('.task input[type="checkbox"]').forEach(b => b.checked = false);
+      updateProgress();
+      toast('Checklist reset.');
+    }
+
+    function cleanUrl() {
+      return document.getElementById('siteUrl').value.trim().replace(/\/$/, '');
+    }
+    function pageList() {
+      return document.getElementById('pages').value.split('\n').map(p => p.trim()).filter(Boolean).map(p => p.startsWith('/') ? p : '/' + p);
+    }
+    function xmlEscape(s) { return s.replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'}[c])); }
+    function generateAsset() {
+      const site = cleanUrl();
+      const brand = document.getElementById('brand').value.trim() || 'Your Brand';
+      const keyword = document.getElementById('keyword').value.trim() || 'target keyword';
+      const desc = document.getElementById('metaDesc').value.trim();
+      const pages = pageList();
+      let out = '';
+      if (selectedType === 'sitemap') {
+        out = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` + pages.map(p => `  <url>\n    <loc>${xmlEscape(site + p)}</loc>\n    <lastmod>${new Date().toISOString().slice(0,10)}</lastmod>\n    <changefreq>${p === '/' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${p === '/' ? '1.0' : '0.8'}</priority>\n  </url>`).join('\n') + `\n</urlset>`;
+      }
+      if (selectedType === 'robots') {
+        out = `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /private/\nDisallow: /search?\n\nSitemap: ${site}/sitemap.xml`;
+      }
+      if (selectedType === 'meta') {
+        const title = `${keyword} | ${brand}`.slice(0, 60);
+        const meta = desc.slice(0, 160);
+        out = `<title>${xmlEscape(title)}</title>\n<meta name="description" content="${xmlEscape(meta)}" />\n<link rel="canonical" href="${xmlEscape(site + '/')}" />\n<meta property="og:title" content="${xmlEscape(title)}" />\n<meta property="og:description" content="${xmlEscape(meta)}" />\n<meta property="og:url" content="${xmlEscape(site + '/')}" />\n<meta property="og:type" content="website" />`;
+      }
+      if (selectedType === 'schema') {
+        out = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: brand,
+          url: site + '/',
+          description: desc,
+          knowsAbout: [keyword, 'Technical SEO', 'Keyword research', 'Generative AI search optimization'],
+          sameAs: []
+        }, null, 2);
+        out = `<script type="application/ld+json">\n${out}\n<\/script>`;
+      }
+      document.getElementById('output').textContent = out;
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        selectedType = tab.dataset.type;
+        generateAsset();
+      });
+    });
+
+    function copyOutput() {
+      navigator.clipboard.writeText(document.getElementById('output').textContent);
+      toast('Output copied.');
+    }
+
+    function copyPlan() {
+      const lines = [];
+      groups.forEach((g, gi) => {
+        lines.push(g.title);
+        g.tasks.forEach((t, ti) => {
+          const id = `g${gi}t${ti}`;
+          lines.push(`${saved[id] ? '[x]' : '[ ]'} ${t[0]} — ${t[1]}`);
+        });
+        lines.push('');
+      });
+      navigator.clipboard.writeText(lines.join('\n'));
+      toast('Action plan copied.');
+    }
+
+    function toast(message) {
+      const t = document.getElementById('toast');
+      t.textContent = message;
+      t.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderTasks();
+    generateAsset();
+  </script>
+</body>
+</html>

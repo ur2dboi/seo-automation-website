@@ -1,0 +1,12 @@
+{
+  "name": "seo-automation-command-center",
+  "version": "2.0.0",
+  "description": "Full-stack SEO/GEO automation dashboard prototype with login, projects, audits, reports, and API integration placeholders.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["seo", "automation", "gsc", "ga4", "geo", "dashboard"],
+  "license": "MIT"
+}
